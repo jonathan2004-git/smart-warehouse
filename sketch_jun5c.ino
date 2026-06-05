@@ -1,0 +1,25 @@
+#include <NewPing.h>
+
+#define TRIG_PIN 22
+#define ECHO_PIN 23
+#define MAX_DISTANCE 200
+
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Sensore HC-SR04 pronto!");
+}
+
+void loop() {
+  delay(500);
+  int distanza = sonar.ping_cm();
+  
+  if (distanza == 0) {
+    Serial.println("Fuori portata o nessun oggetto rilevato");
+  } else {
+    Serial.print("Distanza: ");
+    Serial.print(distanza);
+    Serial.println(" cm");
+  }
+}
