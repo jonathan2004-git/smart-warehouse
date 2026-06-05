@@ -4,32 +4,30 @@
 - 30 cm → 30-31 cm 
 - 60 cm → 60-61 cm 
 
-#define TRIG_PIN 23
-#define ECHO_PIN 22
-------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+#include <NewPing.h>
+
+#define TRIG_PIN 22
+#define ECHO_PIN 23
+#define MAX_DISTANCE 200
+
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE);
+
 void setup() {
   Serial.begin(9600);
-
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+  Serial.println("Sensore HC-SR04 pronto!");
 }
 
 void loop() {
-
-  digitalWrite(TRIG_PIN, LOW);
-  delayMicroseconds(2);
-
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
-
-  long durata = pulseIn(ECHO_PIN, HIGH);
-
-  float distanza = durata * 0.034 / 2;
-
-  Serial.print("Distanza: ");
-  Serial.print(distanza);
-  Serial.println(" cm");
-
   delay(500);
+  int distanza = sonar.ping_cm();
+  
+  if (distanza == 0) {
+    Serial.println("Fuori portata o nessun oggetto rilevato");
+  } else {
+    Serial.print("Distanza: ");
+    Serial.print(distanza);
+    Serial.println(" cm");
+  }
 }
+
