@@ -1,0 +1,35 @@
+# Test Distanze HC-SR04
+
+- 10 cm → 10 cm 
+- 30 cm → 30-31 cm 
+- 60 cm → 60-61 cm 
+
+#define TRIG_PIN 23
+#define ECHO_PIN 22
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  long durata = pulseIn(ECHO_PIN, HIGH);
+
+  float distanza = durata * 0.034 / 2;
+
+  Serial.print("Distanza: ");
+  Serial.print(distanza);
+  Serial.println(" cm");
+
+  delay(500);
+}
