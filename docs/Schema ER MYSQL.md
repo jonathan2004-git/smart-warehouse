@@ -3,9 +3,27 @@ Schema ER MYSQL:
 	Dati generali
 	quantita_totale indica la somma del prodotto nell'intero magazzino
 
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id_prodotto | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome        | varchar(100) | NO   |     | NULL    |                |
+| descrizione | text         | YES  |     | NULL    |                |
+| misura      | decimal(5,2) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
  - Tabella scaffali: 
 	Posizione nel magazzino
 	stato indica se lo scaffale è pieno o vuoto
+
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id_scaffale | varchar(50)  | NO   | PRI | NULL    |       |
+| posizione   | varchar(100) | YES  |     | NULL    |       |
+| stato       | varchar(20)  | YES  |     | verde   |       |
+| profondita  | decimal(5,2) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
 
  - Tabella lettura_sensore: 
 	Tramite il sensore, indipendentemente dal software, notiamo se lo scaffale è occupato o no e in base alla distanza capiamo quanto 	è occupato
