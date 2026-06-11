@@ -1,18 +1,22 @@
 # Componenti Hardware
 
-   ## Scheda principale
-   - **Arduino Mega**
+## Scheda principale
 
-   ## Shield
-   - **MultiFuncShield** 
+- Arduino Mega — [📷 Foto](Photos%20Arduino/Arduino%20Mega.jpeg)
 
-   ## Sensore Ultrasonic
-   - **HC-SR04**  
+## Shield
 
-   ## Cavi e accessori
-   - **Cavo USB B** 
-   - **Cavi M/M** x6
-   - **Cavo ethernet**
-   - **Breadboard**
+- MultiFuncShield — [📷 Foto](Photos%20Arduino/Shield%2BArduino.jpeg)
 
-   ## Raspberry Pi3 B+
+## Sensore Ultrasonic
+
+- HC-SR04 — [📷 Foto](Photos%20Arduino/Sensor.jpeg)
+
+## Cavi e accessori
+
+- Cavo USB B
+- Cavi M/M x6
+- Cavo ethernet
+- Breadboard
+
+## Raspberry Pi3 B+
