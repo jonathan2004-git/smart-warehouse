@@ -17,6 +17,8 @@
 - Cavo USB B
 - Cavi M/M x6
 - Cavo ethernet
-- Breadboard
+- Breadboard — [📷 Foto](Photos%20Arduino/Breadboard.jpeg)
 
 ## Raspberry Pi3 B+
+
+- Raspberry Pi3 B+ — [📷 Foto](Photos%20Arduino/raspberry.jpeg)
