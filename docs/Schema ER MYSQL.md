@@ -9,6 +9,7 @@ Schema ER MYSQL:
 
  - Tabella lettura_sensore: 
 	Tramite il sensore, indipendentemente dal software, notiamo se lo scaffale è occupato o no e in base alla distanza capiamo quanto 	è occupato
+
 +-------------------+---------------+------+-----+---------------------+----------------+
 | Field             | Type          | Null | Key | Default             | Extra          |
 +-------------------+---------------+------+-----+---------------------+----------------+
@@ -20,7 +21,8 @@ Schema ER MYSQL:
    
 - Tabella movimenti: 
 	Mostra i vari movimenti effettuati e da quale scaffale
-	Quando avviene un cambio di distanza si capisce se è pieno o no 
+	Quando avviene un cambio di distanza si capisce se è pieno o no
+
 +----------------+--------------------------+------+-----+---------------------+----------------+
 | Field          | Type                     | Null | Key | Default             | Extra          |
 +----------------+--------------------------+------+-----+---------------------+----------------+
@@ -35,6 +37,7 @@ Schema ER MYSQL:
  - Tabella prodotti_scaffali: 
 	Mostra se il prodotto è distribuito su più scaffali
 	Consente ad ogni scafale di poter avere anche diversi prodotti
+
 +-----------------+-------------+------+-----+---------------------+-------------------------------+
 | Field           | Type        | Null | Key | Default             | Extra                         |
 +-----------------+-------------+------+-----+---------------------+-------------------------------+
