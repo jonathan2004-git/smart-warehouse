@@ -10,6 +10,8 @@ Schema ER MYSQL:
 
 	misura (DECIMAL 5,2): Valore numerico decimale opzionale che esprime la dimensione fisica. 	Questo dato è fondamentale per permettere all'algoritmo del 		backend di calcolare matematicamente quanti pezzi sono presenti basandosi sullo spazio residuo rilevato dal sensore IoT.
 
+![Tabella Prodotti](doc/Photos_Tables/prodotti.png)
+
 
 
  - Tabella scaffali: 
@@ -23,9 +25,11 @@ Schema ER MYSQL:
 
 	profondita (DECIMAL 5,2): Valore numerico decimale che memorizza la profondità totale espressa in centimetri dello scaffale vuoto. Questo dato è essenziale 	poiché funge da punto di riferimento per l'algoritmo del server il sistema calcola lo spazio occupato dalla merce e determina la quantità di prodotti 			presenti, confrontando la profondità massima con la distanza rilevata dal sensore ultrasonico.
 
+![Tabella Prodotti](doc/Photos_Tables/scaffali.png)
 
 
- - Tabella lettura_sensore: 
+
+ - Tabella letture_sensore: 
 	Tramite il sensore in base alla distanza capiamo quanto è occupato, un registro storico che archivia tutti i dati grezzi trasmessi dai sensori tramite MQTT.
 
 	id_lettura (INT): È un contatore numerico progressivo generato automaticamente dal database per ogni nuova ricezione di dati, utile per indicizzare 			cronologicamente i messaggi del sensore.
@@ -35,6 +39,8 @@ Schema ER MYSQL:
 	distanza_rilevata (DECIMAL 10,2): Il valore numerico inviato dal sensore. Rappresenta lo spazio vuoto misurato dal sensore tra se stesso e il primo ostacolo 	rilevato.
 
 	data_lettura (TIMESTAMP): Indica il momento esatto in cui la lettura viene registrata sul database. Se non specificato, il sistema inserisce in automatico la 	data e l'ora correnti del server, permettendo di tracciare la timeline degli eventi in tempo reale.
+
+![Tabella Prodotti](doc/Photos_Tables/letture_sensore.png)
 
 
    
@@ -53,6 +59,8 @@ Schema ER MYSQL:
 
 	data_movimento (TIMESTAMP): Registra il momento esatto in cui è avvenuta la transazione. Valorizzato automaticamente dal database con l'ora corrente del 		server, permette di ricostruire la cronologia dei flussi e alimentare la pagina dello storico delle movimentazioni.
 
+![Tabella Prodotti](doc/Photos_Tables/movimenti.png)
+
 
 
  - Tabella prodotti_scaffali: 
@@ -64,4 +72,6 @@ Schema ER MYSQL:
 	id_scaffale (VARCHAR 50): Memorizza l'identificativo dello scaffale logistico. Funge da vincolo relazionale verso l'anagrafica degli scaffali.
 
 	ultima_modifica (TIMESTAMP): Tiene traccia del momento esatto in cui l'associazione è stata creata o modificata. Il database aggiorna automaticamente questo 	valore in tempo reale ogni volta che la riga viene modificata, senza bisogno di specificarlo manualmente nel codice del backend.
+
+![Tabella Prodotti](doc/Photos_Tables/prodotti_scaffali.png)
 
