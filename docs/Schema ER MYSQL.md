@@ -11,6 +11,7 @@ Schema ER MYSQL:
 	misura (DECIMAL 5,2): Valore numerico decimale opzionale che esprime la dimensione fisica. 	Questo dato è fondamentale per permettere all'algoritmo del 		backend di calcolare matematicamente quanti pezzi sono presenti basandosi sullo spazio residuo rilevato dal sensore IoT.
 
 
+
  - Tabella scaffali: 
 	Mappa i punti di stoccaggio fisici all'interno del magazzino
 
@@ -23,6 +24,7 @@ Schema ER MYSQL:
 	profondita (DECIMAL 5,2): Valore numerico decimale che memorizza la profondità totale espressa in centimetri dello scaffale vuoto. Questo dato è essenziale 	poiché funge da punto di riferimento per l'algoritmo del server il sistema calcola lo spazio occupato dalla merce e determina la quantità di prodotti 			presenti, confrontando la profondità massima con la distanza rilevata dal sensore ultrasonico.
 
 
+
  - Tabella lettura_sensore: 
 	Tramite il sensore in base alla distanza capiamo quanto è occupato, un registro storico che archivia tutti i dati grezzi trasmessi dai sensori tramite MQTT.
 
@@ -33,6 +35,7 @@ Schema ER MYSQL:
 	distanza_rilevata (DECIMAL 10,2): Il valore numerico inviato dal sensore. Rappresenta lo spazio vuoto misurato dal sensore tra se stesso e il primo ostacolo 	rilevato.
 
 	data_lettura (TIMESTAMP): Indica il momento esatto in cui la lettura viene registrata sul database. Se non specificato, il sistema inserisce in automatico la 	data e l'ora correnti del server, permettendo di tracciare la timeline degli eventi in tempo reale.
+
 
    
 - Tabella movimenti: 
@@ -49,6 +52,7 @@ Schema ER MYSQL:
 	quantita (INT): Il numero di pezzi movimentati durante la singola operazione. Questo valore viene utilizzato dal backend per aggiornare, per somma o 			sottrazione, la disponibilità complessiva.
 
 	data_movimento (TIMESTAMP): Registra il momento esatto in cui è avvenuta la transazione. Valorizzato automaticamente dal database con l'ora corrente del 		server, permette di ricostruire la cronologia dei flussi e alimentare la pagina dello storico delle movimentazioni.
+
 
 
  - Tabella prodotti_scaffali: 
