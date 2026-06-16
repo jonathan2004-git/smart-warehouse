@@ -27,3 +27,5 @@ void loop() {
 
   delay(500);
 }
+------------------------------------------------------------------------
+  questo è il codice di prova, ovvero che il sensore rileva la distanza in cm 
