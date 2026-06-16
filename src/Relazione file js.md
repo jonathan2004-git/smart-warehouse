@@ -68,3 +68,5 @@ Avvio del server sulla porta 3000.
 
 Per essere sicuri che sia stato fatto nel modo corretto ho estrapolato la funzione 
 " classificaStato " dal listener MQTT, creato un nuovo file chiamato " utils.test.js " con 6 casi di test che coprono gli scenari reali del sensore, usato JEST per fare il test e sono tutti andati a buon fine.
+
+![Risultato unit test Jest](Unit-test.png)
