@@ -17,3 +17,5 @@ void loop() {
   digitalWrite(13, HIGH);  // D1 spento
   delay(1000);
 }
+------------------------------------------------------
+  questo codice verifica se lo shield è stato installato bene sull'arduino, facendo l'ampeggera il led al secondo 
