@@ -23,3 +23,6 @@ void loop() {
     Serial.println("}");
   }
 }
+---------------------------------------------------------------------
+L'Arduino misura la distanza con il sensore e la invia al Raspberry Pi come JSON, Node-RED legge quel JSON dalla porta seriale e lo pubblica sul broker MQTT.
+  
