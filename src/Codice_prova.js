@@ -1,4 +1,4 @@
-Codice express.js che collega mariadb a mqtt broker
+//Codice express.js che collega mariadb a mqtt broker
 ----------------------------------------------------------------------------------------------
 require('dotenv').config();                        // legge la password del file .env
 const express = require('express');               // crea un server web
