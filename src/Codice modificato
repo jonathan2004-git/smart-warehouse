@@ -1,4 +1,4 @@
-Codice modificato con implementazione logica come da schema fatto in sede
+#Codice modificato con implementazione logica come da schema fatto in sede
 
 ----------------------------------------------------------------------------------------------------------------------------------
 require('dotenv').config();                        // legge la password del file .env
