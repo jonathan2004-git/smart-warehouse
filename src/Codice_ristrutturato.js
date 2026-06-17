@@ -1,4 +1,4 @@
-Implementazione subscriber in Node js, connessione al broker e sottoscrizione del topic magazzino/
+//Implementazione subscriber in Node js, connessione al broker e sottoscrizione del topic magazzino/
 
 ---------------------------------------------------------------------------------------------------------------------
 require('dotenv').config();                        // legge la password del file .env
