@@ -38,7 +38,7 @@ Schema ER MYSQL:
 
 	distanza_rilevata (DECIMAL 10,2): Il valore numerico inviato dal sensore. Rappresenta lo spazio vuoto misurato dal sensore tra se stesso e il primo ostacolo 	rilevato.
 
-	data_lettura (TIMESTAMP): Indica il momento esatto in cui la lettura viene registrata sul database. Se non specificato, il sistema inserisce in automatico la 	data e l'ora correnti del server, permettendo di tracciare la timeline degli eventi in tempo reale.
+	data_lettura (TIMESTAMP): Indica il momento esatto in cui la lettura viene registrata sul database. Se non specificato, il sistema inserisce in automatico la 	data e l'ora correnti del server, permettendo di tracciare la timeline degli eventi in tempo reale. 
 
 ![Tabella Prodotti](Photos_Tables/letture_sensore.png)
 
@@ -75,3 +75,4 @@ Schema ER MYSQL:
 
 ![Tabella Prodotti](Photos_Tables/prodotti_scaffali.png)
 
+Nelle tabelle "letture_sensore", "movimenti" e "prodotti_scaffali" possiamo notare che nell'ultima riga di ognuno c'è la colonna "current_timestamp()" ciò significa che il database inserisce automaticamente la data e l'ora corrente ogni volta che viene eseguita la query "INSERT".
