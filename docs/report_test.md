@@ -25,7 +25,7 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - **Passi eseguiti:** inserimento username/password errati click su "Accedi"
 - **Risultato atteso:** messaggio di errore, nessun accesso consentito
 - **Risultato ottenuto:** nessun accesso 
-- **Screenshot:** ![Accesso negato](../Screenshot%20Pagina/Login/Accesso%20negato.png)
+- **Screenshot:** ![accesso negato](../Screenshot%20Pagina/Login/accesso%20negato.png)
 
 ### 2.3 Logout
 - **Passi eseguiti:** click su "Logout"
