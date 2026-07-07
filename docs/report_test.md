@@ -135,9 +135,8 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - **Screenshot:** ![Prodotti e Scaffali](../Screenshot%20Pagina/Prodotti%26Scaffali/prodotti%20e%20scaffali.png)
 
 ### 7.2 Azione pulsante "+"
-- **Passi eseguiti:** click sul pulsante "+" associato a una riga
-- **Risultato atteso:** [descrivere comportamento atteso]
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Azione pulsante +](screenshots/prodotti_scaffali_azione.png)
+- **Passi eseguiti:** click sul pulsante "+" 
+- **Risultato atteso:** aggiunta del campo
+- **Risultato ottenuto:** se lo scaffale non è gia esistente qualsiasi altro nome inserito non andrà a buon fine 
+- **Screenshot:** ![Aggiunta Prodotti&Scaffali](../Screenshot%20Pagina/Prodotti%26Scaffali/aggiunta.png)
 
