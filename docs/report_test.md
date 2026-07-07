@@ -18,7 +18,7 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - **Passi eseguiti:** inserimento username e password validi, click su "Accedi"
 - **Risultato atteso:** accesso alla home 
 - **Risultato ottenuto:** accesso alla home 
-- **Screenshot:** ![Login effettuato](appena%20effetuato%20accesso.png)
+- **Screenshot:** ![Login effettuato](../Screenshot%20Pagina/Login/appena%20effetuato%20accesso.png)
 
 
 ### 2.2 Login con credenziali errate
