@@ -16,10 +16,10 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 
 ### 2.1 Login con credenziali corrette
 - **Passi eseguiti:** inserimento username e password validi, click su "Accedi"
-- **Risultato atteso:** reindirizzamento alla dashboard, sessione avviata
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Login OK](screenshots/login_ok.png)
+- **Risultato atteso:** accesso alla home 
+- **Risultato ottenuto:** accesso alla home 
+- **Screenshot:** ![Login OK](screenshots/login_ok.png)!
+
 
 ### 2.2 Login con credenziali errate
 - **Passi eseguiti:** inserimento username/password errati, click su "Accedi"
@@ -37,7 +37,7 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 
 ---
 
-## 3. Test — Prodotti (CRUD completo)
+## 3. Test  Prodotti 
 
 ### 3.1 Visualizzazione elenco prodotti
 - **Passi eseguiti:** accesso alla pagina "Prodotti"
