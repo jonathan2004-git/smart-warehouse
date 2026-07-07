@@ -12,7 +12,7 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - Stato Sensore/Dashboard
 
 
-## 2 Test — Login
+## 2 Test Login
 
 ### 2.1 Login con credenziali corrette
 - **Passi eseguiti:** inserimento username e password validi, click su "Accedi"
@@ -126,14 +126,13 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 
 ---
 
-## 7. Test — Prodotti&Scaffali (vista associazioni)
+## 7. Test  Prodotti&Scaffali 
 
 ### 7.1 Visualizzazione distribuzione prodotti sugli scaffali
 - **Passi eseguiti:** accesso alla pagina "Prodotti&Scaffali"
 - **Risultato atteso:** associazioni prodotto-scaffale mostrate correttamente con data ultima modifica
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Prodotti e scaffali](screenshots/prodotti_scaffali_lista.png)
+- **Risultato ottenuto:** pagina paerta correttamente 
+- **Screenshot:** ![Prodotti e Scaffali](../Screenshot%20Pagina/Prodotti%26Scaffali/prodotti%20e%20scaffali.png)
 
 ### 7.2 Azione pulsante "+"
 - **Passi eseguiti:** click sul pulsante "+" associato a una riga
