@@ -86,7 +86,7 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - **Passi eseguiti:** selezione scaffale, modifica campo, salvataggio
 - **Risultato atteso:** modifica salvata e visibile in elenco
 - **Risultato ottenuto:** scaffale modificato
-- **Screenshot:** ![Modifica scaffale](screenshots/scaffali_modifica.png)
+- **Screenshot:** ![Modifica scaffale](../Screenshot%20Pagina/Scaffali/Screenshot%202026-07-07%20121601.png)
 
 ### 4.4 Eliminazione scaffale
 - **Passi eseguiti:** selezione scaffale, click su "Elimina", conferma
@@ -94,28 +94,19 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - **Risultato ottenuto:** scaffale eliminato
 - **Screenshot:** ![Eliminazione scaffale](../Screenshot%20Pagina/Scaffali/Eliminazione%20scaffale.png)
 
-## 5. Test — Dashboard
+## 5. Test Dashboard
 
 ### 5.1 Visualizzazione dati in tempo reale
 - **Passi eseguiti:** accesso alla dashboard
 - **Risultato atteso:** valori aggiornati coerenti con le letture dei sensori
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Dashboard](screenshots/dashboard_realtime.png)
-
-### 5.2 Aggiornamento automatico dei valori
-- **Passi eseguiti:** confronto valore prima/dopo variazione via MQTT
-- **Risultato atteso:** la dashboard si aggiorna senza refresh manuale
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Aggiornamento dashboard](screenshots/dashboard_update.png)
+- **Risultato ottenuto:** Dasboard visualizzata correttamente
+- **Screenshot:** ![Dashboard grafico](../Screenshot%20Pagina/Stato%20Sensore/dashboard%20grafico.png)
 
 ### 5.3 Stato online/offline scaffali
 - **Passi eseguiti:** spegnimento/accensione sensore, osservazione stato
-- **Risultato atteso:** stato online/offline riflette la realtà (topic `magazzino/sensore/stato`)
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Stato sensore](screenshots/dashboard_stato_sensore.png)
+- **Risultato atteso:** stato online/offline 
+- **Risultato ottenuto:** stato esatto in cui si trova 
+- **Screenshot:** ![Stato sensore](../Screenshot%20Pagina/Stato%20Sensore/stato%20sensore.png)
 
 ---
 
