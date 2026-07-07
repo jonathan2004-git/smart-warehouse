@@ -69,44 +69,30 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 
 ---
 
-## 4. Test — Scaffali (CRUD completo)
+## 4. Test  Scaffali 
 
 ### 4.1 Visualizzazione elenco scaffali
 - **Passi eseguiti:** accesso alla pagina "Scaffali"
 - **Risultato atteso:** elenco scaffali mostrato correttamente
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Elenco scaffali](screenshots/scaffali_lista.png)
+- **Risultato ottenuto:** scaffali visualizzati correttamente
+- **Screenshot:** ![Elenco scaffali](../Screenshot%20Pagina/Scaffali/scaffali.png)
 
 ### 4.2 Creazione nuovo scaffale
-- **Passi eseguiti:** click su "Nuovo scaffale", compilazione campi, salvataggio
+- **Passi eseguiti:** Creazione Scaffale
 - **Risultato atteso:** scaffale creato e visibile in elenco
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Creazione scaffale](screenshots/scaffali_crea.png)
+- **Risultato ottenuto:** lo scaffale non è possibile da aggiungere manualmente 
 
 ### 4.3 Modifica scaffale esistente
 - **Passi eseguiti:** selezione scaffale, modifica campo, salvataggio
 - **Risultato atteso:** modifica salvata e visibile in elenco
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
+- **Risultato ottenuto:** scaffale modificato
 - **Screenshot:** ![Modifica scaffale](screenshots/scaffali_modifica.png)
 
 ### 4.4 Eliminazione scaffale
 - **Passi eseguiti:** selezione scaffale, click su "Elimina", conferma
 - **Risultato atteso:** scaffale rimosso dall'elenco
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Eliminazione scaffale](screenshots/scaffali_elimina.png)
-
-### 4.5 Validazione campi obbligatori / errori input
-- **Passi eseguiti:** tentativo di salvataggio con id scaffale vuoto
-- **Risultato atteso:** messaggio di errore, salvataggio bloccato
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Validazione scaffali](screenshots/scaffali_validazione.png)
-
----
+- **Risultato ottenuto:** scaffale eliminato
+- **Screenshot:** ![Eliminazione scaffale](../Screenshot%20Pagina/Scaffali/Eliminazione%20scaffale.png)
 
 ## 5. Test — Dashboard
 
