@@ -40,37 +40,32 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 ### 3.1 Visualizzazione elenco prodotti
 - **Passi eseguiti:** accesso alla pagina "Prodotti"
 - **Risultato atteso:** elenco prodotti mostrato correttamente con tutti i campi
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Elenco prodotti](screenshots/prodotti_lista.png)
+- **Risultato ottenuto:** Visualizzato elenco
+- **Screenshot:** ![Elenco prodotti](../Screenshot%20Pagina/Prodotti/prodotti.png)
 
 ### 3.2 Creazione nuovo prodotto
 - **Passi eseguiti:** click su "Nuovo prodotto", compilazione campi, salvataggio
 - **Risultato atteso:** prodotto creato e visibile in elenco
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Creazione prodotto](screenshots/prodotti_crea.png)
+- **Risultato ottenuto:** Prodotto creato correttamente 
+- **Screenshot:** ![Prodotto aggiunto](../Screenshot%20Pagina/Prodotti/prodotti%20dopo%20l'aggiunzione.png)
 
 ### 3.3 Modifica prodotto esistente
 - **Passi eseguiti:** selezione prodotto, modifica campo, salvataggio
 - **Risultato atteso:** modifica salvata e visibile in elenco
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Modifica prodotto](screenshots/prodotti_modifica.png)
+- **Risultato ottenuto:** prodotto modificato correttamente 
+- **Screenshot:** ![Modifica prodotto](../Screenshot%20Pagina/Prodotti/modifica%20prodotto%20esistente.png)
 
 ### 3.4 Eliminazione prodotto
 - **Passi eseguiti:** selezione prodotto, click su "Elimina", conferma
 - **Risultato atteso:** prodotto rimosso dall'elenco
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Eliminazione prodotto](screenshots/prodotti_elimina.png)
+- **Risultato ottenuto:** prodotto eliminato correttamente 
+- **Screenshot:** ![Eliminazione prodotto](../Screenshot%20Pagina/Prodotti/eliminazione%20prodotto.png)
 
 ### 3.5 Validazione campi obbligatori / errori input
 - **Passi eseguiti:** tentativo di salvataggio con campo nome vuoto
 - **Risultato atteso:** messaggio di errore, salvataggio bloccato
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Validazione prodotti](screenshots/prodotti_validazione.png)
+- **Risultato ottenuto:** nessuna segnalazione di errore
+- **Screenshot:** ![Validazione campo numerico](../Screenshot%20Pagina/Prodotti/quando%20al%20posto%20del%20numero%20metto%20delle%20lettere%20non%20aggiunge%20niente%20e%20basta%20non%20segnala%20nessun%20errore.png)
 
 ---
 
@@ -172,22 +167,3 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 - **Esito:** [PASS/FAIL]
 - **Screenshot:** ![Azione pulsante +](screenshots/prodotti_scaffali_azione.png)
 
----
-
-## 8. Riepilogo finale
-
-| Sezione | Test totali | PASS | FAIL |
-|---|---|---|---|
-| Login | 3 | | |
-| Prodotti | 5 | | |
-| Scaffali | 5 | | |
-| Dashboard | 3 | | |
-| Storico | 2 | | |
-| Prodotti&Scaffali | 2 | | |
-| **Totale** | **20** | | |
-
-### Bug/anomalie riscontrate
-- [elencare eventuali problemi trovati durante i test]
-
-### Conclusioni
-[breve valutazione complessiva sulla stabilità e funzionalità dell'applicazione]
