@@ -22,18 +22,16 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 
 
 ### 2.2 Login con credenziali errate
-- **Passi eseguiti:** inserimento username/password errati, click su "Accedi"
+- **Passi eseguiti:** inserimento username/password errati click su "Accedi"
 - **Risultato atteso:** messaggio di errore, nessun accesso consentito
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Login errore](screenshots/login_errore.png)
+- **Risultato ottenuto:** nessun accesso 
+- **Screenshot:** ![Accesso negato](../Screenshot%20Pagina/Login/Accesso%20negato.png)
 
 ### 2.3 Logout
 - **Passi eseguiti:** click su "Logout"
-- **Risultato atteso:** reindirizzamento alla pagina di login, sessione terminata
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Logout](screenshots/logout.png)
+- **Risultato atteso:** reindirizzamento alla pagina di login
+- **Risultato ottenuto:** uscito dalla home, e ritorno alla apgina iniziale 
+- **Screenshot:** ![Logout effettuato](../Screenshot%20Pagina/Login/appena%20effettuato%20logout.png)
 
 ---
 
