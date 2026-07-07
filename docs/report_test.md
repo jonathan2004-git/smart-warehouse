@@ -110,21 +110,19 @@ Questo documento riporta i risultati dei test manuali eseguiti sull'applicazione
 
 ---
 
-## 6. Test — Storico Logistica
+## 6. Test Storico Logistica
 
 ### 6.1 Visualizzazione storico letture
 - **Passi eseguiti:** accesso alla pagina "Storico Logistica"
 - **Risultato atteso:** elenco cronologico delle letture/movimenti mostrato correttamente
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Storico](screenshots/storico_lista.png)
+- **Risultato ottenuto:** tutte le letture sono avvenute correttamente 
+- **Screenshot:** ![Storico Logistica](../Screenshot%20Pagina/Storico%20Logistica/storico%20logistica.png)
 
-### 6.2 Filtro per scaffale/data (se presente)
+### 6.2 Filtro per scaffale
 - **Passi eseguiti:** applicazione filtro
 - **Risultato atteso:** elenco filtrato correttamente
-- **Risultato ottenuto:** [inserire]
-- **Esito:** [PASS/FAIL]
-- **Screenshot:** ![Filtro storico](screenshots/storico_filtro.png)
+- **Risultato ottenuto:** elenco filtrato
+- **Screenshot:** ![Storico Paperino](../Screenshot%20Pagina/Storico%20Logistica/storico%20paperino.png)
 
 ---
 
