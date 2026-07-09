@@ -51,13 +51,15 @@ Schema ER MYSQL:
 
 	id_prodotto (INT): Memorizza l'identificativo del prodotto coinvolto nell'operazione. La dicitura "MUL" nella colonna "Key" indica un indice che collega il 	movimento all'anagrafica prodotti.
 
-	id_scaffale (VARCHAR 50): Identifica lo scaffale da cui la merce è stata prelevata o in cui è stata depositata.
+	id_scaffale (VARCHAR 50): Identifica lo scaffale da cui la merce è stata prelevata o in cui è stata depositata. Anche questo capo ha dicitura "MUL" utilizzato per collegare il movimento allo scaffale
 
-	tipo_movimento (ENUM): Campo a scelta obbligata vincolato ai soli valori "entrata" o "uscita". Definisce la natura del flusso logistico.
+	tipo_movimento (ENUM): Campo a scelta obbligata vincolato ai soli valori "entrata" o "uscita" o "errore". Definisce la natura del flusso logistico, dove "errore" identifica le letture anomale (nel caso in cui la lettura sia maggiore della profondità dello scaffale) che non corrisponde ad un reale movimento della merce.
 
-	quantita (INT): Il numero di pezzi movimentati durante la singola operazione. Questo valore viene utilizzato dal backend per aggiornare, per somma o 			sottrazione, la disponibilità complessiva.
+	quantita (INT): Il numero di pezzi movimentati durante la singola operazione. Questo valore viene utilizzato dal backend per aggiornare, per somma o sottrazione, la disponibilità complessiva.
 
-	data_movimento (TIMESTAMP): Registra il momento esatto in cui è avvenuta la transazione. Valorizzato automaticamente dal database con l'ora corrente del 		server, permette di ricostruire la cronologia dei flussi e alimentare la pagina dello storico delle movimentazioni.
+	data_movimento (TIMESTAMP): Registra il momento esatto in cui è avvenuta la transazione. Valorizzato automaticamente dal database con l'ora corrente del server, permette di ricostruire la cronologia dei flussi e alimentare la pagina dello storico delle movimentazioni.
+
+	distanza (DECIMAL 5,2): Registra la distanza rilevata dal sensore (in centimetri) al momento del movimento. Viene salvata insieme a ogni transazione per mantenere traccia della misurazione grezza che ha generato il calcolo della quantità, utile anche per verificare o correggere eventuali anomalie rilevate come "errore".
 
 ![Tabella Prodotti](Photos_Tables/movimenti.png)
 
