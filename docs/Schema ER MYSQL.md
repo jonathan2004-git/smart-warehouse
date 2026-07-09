@@ -66,15 +66,27 @@ Schema ER MYSQL:
 
 
  - Tabella prodotti_scaffali: 
-	Mostra se il prodotto è distribuito su più scaffali
+	Mostra su quale scaffale è posizionato ogni prodotto
 	Consente ad ogni scafale di poter avere anche diversi prodotti
 
-	id_prodotto (INT): Memorizza l'identificativo del prodotto. Insieme a "id_scaffale" costituisce una chiave primaria composta, garantendo l'unicità 				dell'accoppiamento: lo stesso prodotto non può essere associato due volte allo stesso identico scaffale.
+	id_prodotto (INT): Memorizza l'identificativo del prodotto. Insieme a "id_scaffale" costituisce una chiave primaria composta. Inoltre è vincolato da un ulteriore indice "UNIQUE" sulla sola colonna id_prodotto, che garantisce che ogni prodotto possa essere associato a un solo scaffale alla volta, quindi se un prodotto viene riassegnato a un nuovo scaffale e la vecchia associazione viene sostituita automaticamente, non duplicata.
 
-	id_scaffale (VARCHAR 50): Memorizza l'identificativo dello scaffale logistico. Funge da vincolo relazionale verso l'anagrafica degli scaffali.
+	id_scaffale (VARCHAR 50): Memorizza l'identificativo dello scaffale logistico. Funge da vincolo relazionale verso l'anagrafica degli scaffali. A differenza di "id_prodotto", questa colonna non ha vincoli di unicità propri, quindi lo stesso scaffale può comparire in più righe, ospitando prodotti diversi 
 
-	ultima_modifica (TIMESTAMP): Tiene traccia del momento esatto in cui l'associazione è stata creata o modificata. Il database aggiorna automaticamente questo 	valore in tempo reale ogni volta che la riga viene modificata, senza bisogno di specificarlo manualmente nel codice del backend.
+	ultima_modifica (TIMESTAMP): Tiene traccia del momento esatto in cui l'associazione è stata creata o modificata. Il database aggiorna automaticamente questo valore in tempo reale ogni volta che la riga viene modificata, senza bisogno di specificarlo manualmente nel codice del backend.
 
 ![Tabella Prodotti](Photos_Tables/prodotti_scaffali.png)
 
+
 Nelle tabelle "letture_sensore", "movimenti" e "prodotti_scaffali" possiamo notare che nell'ultima riga di ognuno c'è la colonna "current_timestamp()" ciò significa che il database inserisce automaticamente la data e l'ora corrente ogni volta che viene eseguita la query "INSERT".
+
+
+ - Tabella utenti:
+    Gestisce gli account abilitati ad accedere al sistema
+
+id (INT): È un identificativo numerico progressivo generato automaticamente che, in modo univoco, identifica ogni account registrato nel sistema.
+username (VARCHAR 50): Il nome utente scelto per l'accesso al sistema. La dicitura "UNI" nella colonna "Key" indica un vincolo di unicità: non possono esistere due account con lo stesso username.
+password (VARCHAR 255): Contiene l'hash della password calcolato tramite l'algoritmo bcrypt, non la password in chiaro. La lunghezza di 255 caratteri è dimensionata per ospitare il formato standard degli hash generati da questa libreria, garantendo che le credenziali non siano mai leggibili direttamente dal database.
+nome (VARCHAR 100): Campo opzionale che memorizza il nome descrittivo associato all'account, utilizzato eventualmente per identificare l'utente in modo più leggibile rispetto al solo username.
+
+![Tabella Movimenti](Photos_Tables/utenti.png)
