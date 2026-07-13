@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Magazzino IoT</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <span id="server-status">● Connessione...</span>
+            <div class="nav-links">
+                <a href="Inventario.html">Prodotti</a>
+                <a href="gestione_scaffali.html">Scaffali</a>
+                <a href="prodotti_scaffali.html">Prodotti&Scaffali</a>
+                <a href="scaffali.html">Stato Scaffali</a>
+                <a href="movimenti.html" class="active">Storico Logistica</a>
+                <a href="sensore.html">Stato Sensore</a>
+            </div>
+            <a href="/logout" class="nav-logo">Logout ➜]</a>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <h1>Storico Logistica</h1>
+        <div id="banner-sensore" style="display:none; background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; margin-bottom:16px; font-weight:bold;">
+            ⚠️ Attenzione: il sensore risulta scollegato. I dati potrebbero non essere aggiornati.
+        </div>
+
+        <div class="stats-container">
+            <div class="card">
+                <h3>Totale Movimenti</h3>
+                <p id="total-count">Caricamento...</p>
+            </div>
+        </div>
+        <div class="history-controls" style="margin-bottom:16px;">
+            <label for="filtro-scaffale">Scaffale:</label>
+            <select id="filtro-scaffale">
+                <option value="">Tutti</option>
+            </select>
+            <label for="filtro-da">Dal:</label>
+            <input type="date" id="filtro-da">
+            <label for="filtro-a">Al:</label>
+            <input type="date" id="filtro-a">
+            <button onclick="caricaMovimenti()">Filtra</button>
+            <button onclick="esportaCSV()">⬇ CSV</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Data/Ora</th>
+                    <th>Scaffale</th>
+                    <th>Prodotto</th>
+                    <th>Tipo Movimento</th>
+                    <th>Quantità</th>
+                </tr>
+            </thead>
+            <tbody id="movimenti-body"></tbody>
+        </table>
+
+        <script>
+            async function caricaMovimenti() {
+                try {
+                    const scaffale = document.getElementById('filtro-scaffale').value;
+                    const da = document.getElementById('filtro-da').value;
+                    const a = document.getElementById('filtro-a').value;
+
+                    let url = 'http://192.168.0.218:3000/api/movimenti';
+                    const params = [];
+                    if (scaffale) params.push(`id_scaffale=${scaffale}`);
+                    if (da) params.push(`data_da=${da}`);
+                    if (a) params.push(`data_a=${a}`);
+                    if (params.length > 0) url += '?' + params.join('&');
+                    const response = await fetch(url);
+                    const movimenti = await response.json();
+
+                    const tbody = document.getElementById('movimenti-body');
+                    const countDisplay = document.getElementById('total-count');
+
+                    tbody.innerHTML = '';
+
+                    // Se non ci sono movimenti o la risposta è vuota
+                    if (!Array.isArray(movimenti) || movimenti.length === 0) {
+                        countDisplay.innerText = "0";
+                        return;
+                    }
+
+                    countDisplay.innerText = movimenti.length;
+
+                    movimenti.forEach(m => {
+                        const isErrore = m.tipo_movimento === 'errore' || (m.profondita && (parseFloat(m.distanza) > parseFloat(m.profondita) || parseFloat(m.distanza) < 0));
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${new Date(m.data_movimento).toLocaleString('it-IT')}</td>
+                                <td>${m.nome_scaffale || m.id_scaffale || '---'}</td>
+                                <td>${m.nome || 'Prodotto sconosciuto'}</td>
+                                <td>${isErrore ? '<span style="color:red">Errore</span>' : m.tipo_movimento}</td>
+                                <td>${isErrore ? '<span style="color:red">Errore</span>' : m.quantita}</td>
+                            </tr>`;
+                    });
+                } catch (error) {
+                    console.error("Errore nel caricamento:", error);
+                    document.getElementById('total-count').innerText = "Errore";
+                }
+            }
+            async function caricaScaffaliSelect() {
+                try {
+                    const res = await fetch('http://192.168.0.218:3000/api/scaffali');
+                    const scaffali = await res.json();
+                    const select = document.getElementById('filtro-scaffale');
+                    select.innerHTML = '<option value="">Tutti</option>';
+                    scaffali.forEach(s => {
+                        select.innerHTML += `<option value="${s.id_scaffale}">${s.nome_scaffale || s.id_scaffale}</option>`;
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        function esportaCSV() {
+            const righe = document.querySelectorAll('#movimenti-body tr');
+            if (righe.length === 0) return;
+
+            let csv = 'Data/Ora,Scaffale,Prodotto,Tipo Movimento,Quantità\n';
+            righe.forEach(riga => {
+                const celle = riga.querySelectorAll('td');
+                const valori = Array.from(celle).map(td => `"${td.innerText}"`);
+                csv += valori.join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'movimenti.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        caricaScaffaliSelect();
+        caricaMovimenti();
+        setInterval(caricaMovimenti, 5000);
+
+        </script>
+
+    <script>
+        async function controllaServer() {
+            const el = document.getElementById('server-status');
+            try {
+                const res = await fetch('http://192.168.0.218:3000/api/health');
+                const dati = await res.json();
+                if (dati.stato === 'online') {
+                    el.textContent = '● Server Online';
+                    el.style.color = '#22c55e';
+                } else {
+                    el.textContent = '● Server Offline';
+                    el.style.color = '#ef4444';
+                }
+            } catch (e) {
+                el.textContent = '● Server Offline';
+                el.style.color = '#ef4444';
+            }
+        }
+        controllaServer();
+        setInterval(controllaServer, 5000);
+        async function controllaSensore() {
+            try {
+                const res = await fetch('http://192.168.0.218:3000/api/sensore/stato');
+                const { stato } = await res.json();
+                const banner = document.getElementById('banner-sensore');
+                banner.style.display = stato === 'offline' ? 'block' : 'none';
+            } catch (e) {}
+        }
+        controllaSensore();
+        setInterval(controllaSensore, 5000);
+        let erroreGiàMostrato = null;
+
+        async function controllaErrorePayload() {
+            try {
+                const res = await fetch('http://192.168.0.218:3000/api/errore/payload');
+                const { errore } = await res.json();
+                if (errore && errore.timestamp !== erroreGiàMostrato) {
+                    erroreGiàMostrato = errore.timestamp;
+                    document.getElementById('popup-messaggio').textContent = errore.messaggio;
+                    document.getElementById('popup-timestamp').textContent = errore.timestamp;
+                    document.getElementById('popup-errore').style.display = 'block';
+                    document.getElementById('popup-overlay').style.display = 'block';
+                }
+            } catch (e) {}
+        }
+
+        function chiudiPopup() {
+            document.getElementById('popup-errore').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+
+        controllaErrorePayload();
+        setInterval(controllaErrorePayload, 3000);
+    </script>
+<div id="popup-errore" style="display:none; position:fixed; top:50%; left:50%;
+     transform:translate(-50%,-50%); background:#1e1e2e; color:white;
+     padding:32px; border-radius:12px; text-align:center; z-index:9999;
+     box-shadow: 0 8px 32px rgba(0,0,0,0.4); min-width:320px;">
+    <div style="font-size:48px;">⚠️</div>
+    <h3 style="color:#f87171; margin:12px 0;">Errore Payload</h3>
+    <p id="popup-messaggio" style="color:#94a3b8;"></p>
+    <p id="popup-timestamp" style="color:#64748b; font-size:0.85em;"></p>
+    <button onclick="chiudiPopup()" style="margin-top:16px; padding:10px 28px;
+        background:#6366f1; color:white; border:none; border-radius:8px;
+        cursor:pointer; font-size:1em;">Ok</button>
+</div>
+<div id="popup-overlay" style="display:none; position:fixed; top:0; left:0;
+     width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9998;"></div>
+
+</body>
+
+</html>
