@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafico Letture - Magazzino IoT</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <span id="server-status">● Connessione...</span>
+            <div class="nav-links">
+                <a href="sensore.html">← Torna a Stato Sensore</a>
+            </div>
+            <a href="/logout" class="nav-logo">Logout ➜]</a>
+        </div>
+    </nav>
+
+    <div class="container">
+    <div id="banner-sensore" style="display:none; background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; margin-bottom:16px; font-weight:bold;">
+        ⚠️ Attenzione: il sensore risulta scollegato. I dati potrebbero non essere aggiornati.
+    </div>
+        <h1>Grafico Ultime 24h</h1>
+        <div class="history-controls">
+            <label for="chart-scaffale">Scaffale:</label>
+            <select id="chart-scaffale" onchange="caricaGrafico()">
+                <option value="">-- Seleziona scaffale --</option>
+            </select>
+        </div>
+        <canvas id="grafico-letture" height="80"></canvas>
+    </div>
+
+    <script>
+        const BASE = 'http://192.168.0.218:3000';
+        let grafico = null;
+
+        async function caricaScaffaliSelect() {
+            try {
+                const res = await fetch(`${BASE}/api/sensor/latest`);
+                const dati = await res.json();
+                const select = document.getElementById('chart-scaffale');
+                select.innerHTML = '<option value="">-- Seleziona scaffale --</option>';
+                dati.forEach(s => {
+                    select.innerHTML += `<option value="${s.id_scaffale}">${s.nome_scaffale || s.id_scaffale}</option>`;
+                });
+
+                // legge id_scaffale dall'URL se presente
+                const params = new URLSearchParams(window.location.search);
+                const idDaUrl = params.get('id_scaffale');
+                if (idDaUrl) {
+                    select.value = idDaUrl;
+                } else if (select.options.length > 1) {
+                    select.selectedIndex = 1;
+                }
+                caricaGrafico();
+            } catch (e) { console.error(e); }
+        }
+
+        async function caricaGrafico() {
+            const id_scaffale = document.getElementById('chart-scaffale').value;
+            if (!id_scaffale) return;
+
+            try {
+                const res = await fetch(`${BASE}/api/sensor/chart?id_scaffale=${id_scaffale}&_=${Date.now()}`);
+                const dati = await res.json();
+
+                const labels = dati.map(d => new Date(d.data_lettura).toLocaleTimeString('it-IT'));
+                const valori = dati.map(d => parseFloat(d.distanza_rilevata));
+
+                if (grafico) grafico.destroy();
+
+                const ctx = document.getElementById('grafico-letture').getContext('2d');
+                grafico = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: `Distanza rilevata (cm) — ${id_scaffale}`,
+                            data: valori,
+                            borderColor: '#4fc3f7',
+                            backgroundColor: 'rgba(79, 195, 247, 0.1)',
+                            borderWidth: 2,
+                            pointRadius: 3,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Distanza (cm)' }
+                            },
+                            x: {
+                                title: { display: true, text: 'Ora' }
+                            }
+                        }
+                    }
+                });
+            } catch (e) { console.error('Errore grafico:', e); }
+        }
+
+        caricaScaffaliSelect();
+        setInterval(caricaGrafico, 30000); // aggiorna ogni 30 secondi
+    </script>
+
+    <script>
+        async function controllaServer() {
+            const el = document.getElementById('server-status');
+            try {
+                const res = await fetch(`${BASE}/api/health`);
+                const dati = await res.json();
+                if (dati.stato === 'online') {
+                    el.textContent = '● Server Online';
+                    el.style.color = '#22c55e';
+                } else {
+                    el.textContent = '● Server Offline';
+                    el.style.color = '#ef4444';
+                }
+            } catch (e) {
+                el.textContent = '● Server Offline';
+                el.style.color = '#ef4444';
+            }
+        }
+        controllaServer();
+        setInterval(controllaServer, 5000);
+        async function controllaSensore() {
+            try {
+                const res = await fetch(`${BASE}/api/sensore/stato`);
+                const { stato } = await res.json();
+                const banner = document.getElementById('banner-sensore');
+                banner.style.display = stato === 'offline' ? 'block' : 'none';
+            } catch (e) {}
+        }
+        controllaSensore();
+        setInterval(controllaSensore, 5000);
+
+        let erroreGiàMostrato = null;
+
+        async function controllaErrorePayload() {
+            try {
+                const res = await fetch(`${BASE}/api/errore/payload`);
+                const { errore } = await res.json();
+                if (errore && errore.timestamp !== erroreGiàMostrato) {
+                    erroreGiàMostrato = errore.timestamp;
+                    document.getElementById('popup-messaggio').textContent = errore.messaggio;
+                    document.getElementById('popup-timestamp').textContent = errore.timestamp;
+                    document.getElementById('popup-errore').style.display = 'block';
+                    document.getElementById('popup-overlay').style.display = 'block';
+                }
+            } catch (e) {}
+        }
+
+        function chiudiPopup() {
+            document.getElementById('popup-errore').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+
+        controllaErrorePayload();
+        setInterval(controllaErrorePayload, 5000);
+    </script>
+<div id="popup-errore" style="display:none; position:fixed; top:50%; left:50%;
+     transform:translate(-50%,-50%); background:#1e1e2e; color:white;
+     padding:32px; border-radius:12px; text-align:center; z-index:9999;
+     box-shadow: 0 8px 32px rgba(0,0,0,0.4); min-width:320px;">
+    <div style="font-size:48px;">⚠️</div>
+    <h3 style="color:#f87171; margin:12px 0;">Errore Payload</h3>
+    <p id="popup-messaggio" style="color:#94a3b8;"></p>
+    <p id="popup-timestamp" style="color:#64748b; font-size:0.85em;"></p>
+    <button onclick="chiudiPopup()" style="margin-top:16px; padding:10px 28px;
+        background:#6366f1; color:white; border:none; border-radius:8px;
+        cursor:pointer; font-size:1em;">Ok</button>
+</div>
+<div id="popup-overlay" style="display:none; position:fixed; top:0; left:0;
+     width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9998;"></div>
+</body>
+</html>
