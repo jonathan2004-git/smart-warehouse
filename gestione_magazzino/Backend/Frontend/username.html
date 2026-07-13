@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio Username - Smart Warehouse</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+
+<form id="form-cambio-username" autocomplete="off">
+
+    <h2>Cambio Username</h2>
+    <p class="subtitle">Inserisci le tue credenziali per aggiornare lo username</p>
+
+    <div id="msg-errore" class="error-msg"></div>
+    <div id="msg-successo" class="success-msg"></div>
+
+    <input type="text" id="username" placeholder="Username attuale" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="text" id="nuovo-username" placeholder="Nuovo username" required />
+
+    <input type="submit" value="Aggiorna Username" id="btn-submit" />
+
+    <p class="link-cambio-password">
+        <a href="/index.html">← Torna al login</a>
+    </p>
+
+</form>
+
+<script>
+    document.getElementById('form-cambio-username').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const nuovo_username = document.getElementById('nuovo-username').value;
+
+        const msgErrore = document.getElementById('msg-errore');
+        const msgSuccesso = document.getElementById('msg-successo');
+
+        msgErrore.style.display = 'none';
+        msgSuccesso.style.display = 'none';
+
+        if (nuovo_username === username) {
+            msgErrore.textContent = 'Il nuovo username deve essere diverso da quello attuale.';
+            msgErrore.style.display = 'block';
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/username', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, nuovo_username })
+            });
+
+            const dati = await res.json();
+
+            if (res.ok) {
+                msgSuccesso.textContent = dati.messaggio + ' Verrai reindirizzato al login...';
+                msgSuccesso.style.display = 'block';
+                setTimeout(() => { location.href = '/index.html'; }, 2500);
+            } else {
+                msgErrore.textContent = dati.errore;
+                msgErrore.style.display = 'block';
+            }
+        } catch (e) {
+            msgErrore.textContent = 'Errore di connessione al server.';
+            msgErrore.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>
