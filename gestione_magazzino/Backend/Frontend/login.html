@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Warehouse</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+
+<form id="login-form" action="/login" method="post" autocomplete="off">
+
+    <div id="error-msg" class="error-msg">
+        Username o password non corretti. Riprova.
+    </div>
+
+    <h2>Smart Warehouse</h2>
+    <p class="subtitle">Accedi per gestire il magazzino</p>
+
+    <!-- Username con autocomplete -->
+    <div class="input-wrapper">
+        <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
+        />
+        <div class="autocomplete-list" id="autocomplete-list"></div>
+    </div>
+
+    <!-- Password con toggle visibilità -->
+    <div class="input-wrapper password-wrapper">
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+        />
+        <button type="button" class="toggle-password" onclick="togglePassword()" title="Mostra/nascondi password">
+            👁
+        </button>
+    </div>
+
+    <input type="submit" value="Accedi →" />
+    <p class="link-cambio-password">
+        <a href="/password.html">Cambio password?</a> · <a href="/username.html">Cambio username?</a>
+    </p>
+
+</form>
+
+<script>
+    // --- Autocomplete utenti ---
+    let utentiDisponibili = [];
+
+    async function caricaUtenti() {
+        try {
+            const res = await fetch('/api/utenti');
+            if (res.ok) {
+                const dati = await res.json();
+                utentiDisponibili = dati.map(u => u.username);
+            }
+        } catch (e) {
+            utentiDisponibili = [];
+        }
+    }
+
+    const inputUsername = document.getElementById('username');
+    const lista = document.getElementById('autocomplete-list');
+    let indexSelezionato = -1;
+
+    inputUsername.addEventListener('input', function () {
+        const val = this.value.toLowerCase().trim();
+        lista.innerHTML = '';
+        indexSelezionato = -1;
+
+        if (!val) { lista.classList.remove('visible'); return; }
+
+        const filtrati = utentiDisponibili.filter(u => u.toLowerCase().startsWith(val));
+        if (filtrati.length === 0) { lista.classList.remove('visible'); return; }
+
+        filtrati.forEach(u => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            item.textContent = u;
+            item.addEventListener('mousedown', () => {
+                inputUsername.value = u;
+                lista.classList.remove('visible');
+            });
+            lista.appendChild(item);
+        });
+
+        lista.classList.add('visible');
+    });
+
+    inputUsername.addEventListener('keydown', function (e) {
+        const items = lista.querySelectorAll('.autocomplete-item');
+        if (e.key === 'ArrowDown') {
+            indexSelezionato = Math.min(indexSelezionato + 1, items.length - 1);
+        } else if (e.key === 'ArrowUp') {
+            indexSelezionato = Math.max(indexSelezionato - 1, 0);
+        } else if (e.key === 'Enter' && indexSelezionato >= 0) {
+            e.preventDefault();
+            inputUsername.value = items[indexSelezionato].textContent;
+            lista.classList.remove('visible');
+            return;
+        } else if (e.key === 'Escape') {
+            lista.classList.remove('visible');
+            return;
+        }
+        items.forEach((item, i) => item.classList.toggle('selected', i === indexSelezionato));
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.input-wrapper')) lista.classList.remove('visible');
+    });
+
+    // --- Toggle password ---
+    function togglePassword() {
+        const input = document.getElementById('password');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // --- Messaggio errore ---
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('errore') === '1') {
+        document.getElementById('error-msg').style.display = 'block';
+    }
+
+    caricaUtenti();
+</script>
+
+</body>
+</html>
