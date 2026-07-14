@@ -25,9 +25,7 @@ Questo documento descrive l'esecuzione di due scenari di test end-to-end sul sis
 | 6 | Verifica coerenza dato a database | Lettura salvata con quantità e timestamp corretti | Eseguito |
 
 ### Screenshot
-
-- `![Aggiunta prodotto](./screenshot/scenario1_aggiunta_prodotto.png)`
-- `![Dashboard aggiornata](./screenshot/scenario1_dashboard_aggiornata.png)`
+![Associazione prodotti e scaffali](./Scenari/aggiunto%20vr%20prodotti%20e%20scaffali.png)
 
 ### Esito
 
