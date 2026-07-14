@@ -51,7 +51,7 @@ Schema ER MYSQL:
 
 	id_prodotto (INT): Memorizza l'identificativo del prodotto coinvolto nell'operazione. La dicitura "MUL" nella colonna "Key" indica un indice che collega il 	movimento all'anagrafica prodotti.
 
-	id_scaffale (VARCHAR 50): Identifica lo scaffale da cui la merce è stata prelevata o in cui è stata depositata. Anche questo capo ha dicitura "MUL" utilizzato per collegare il movimento allo scaffale
+	id_scaffale (VARCHAR 50): Identifica lo scaffale da cui la merce è stata prelevata o in cui è stata depositata. Anche questo campo ha dicitura "MUL" utilizzato per collegare il movimento allo scaffale
 
 	tipo_movimento (ENUM): Campo a scelta obbligata vincolato ai soli valori "entrata" o "uscita" o "errore". Definisce la natura del flusso logistico, dove "errore" identifica le letture anomale (nel caso in cui la lettura sia maggiore della profondità dello scaffale) che non corrisponde ad un reale movimento della merce.
 
