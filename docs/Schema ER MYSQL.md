@@ -1,4 +1,4 @@
-Schema ER MYSQL:
+## Schema ER MYSQL:
  - Tabella prodotti: 
 	Dati generali, anagrafica degli articoli nel sistema
 
