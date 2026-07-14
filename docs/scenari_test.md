@@ -22,7 +22,7 @@ Questo documento descrive l'esecuzione di due scenari di test end-to-end sul sis
 | 3 | Carico fisico: avvicinamento ostacolo al sensore HC-SR04 | Il sensore rileva la nuova distanza e la pubblica su MQTT | Distanza aggiornata correttamente nel debug panel |
 | 4 | Verifica ricezione dato su Node-RED | Payload con `quantita` e `stato` coerenti | Payload ricevuto corretto |
 | 5 | Verifica visualizzazione su dashboard | Gauge e stato aggiornati in tempo reale | Dashboard aggiornata correttamente |
-| 6 | Verifica coerenza dato a database | Lettura salvata con quantità e timestamp corretti | Da verificare |
+| 6 | Verifica coerenza dato a database | Lettura salvata con quantità e timestamp corretti | Eseguito |
 
 ### Screenshot
 
