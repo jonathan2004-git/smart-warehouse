@@ -50,7 +50,6 @@ Questo documento descrive l'esecuzione di due scenari di test end-to-end sul sis
 ### Screenshot
 
 ![Stato sensore vuoto/parziale](./Scenari/stato%20sensore%20vuoto%20parziale.png)
-![Dashboard vuoto](./Scenari/dashboard%20vuoto.png)
 ![Stato vuoto](./Scenari/stato%20vuoto.png)
 
 ### Esito
