@@ -43,8 +43,8 @@ Questo documento descrive l'esecuzione di due scenari di test end-to-end sul sis
 |---|-------|-------------------|---------------------|
 | 1 | Rimozione fisica: allontanamento ostacolo dal sensore HC-SR04 | Il sensore rileva l'aumento di distanza | Distanza aggiornata correttamente nel debug panel |
 | 2 | Pubblicazione dato aggiornato su MQTT | Payload con quantita: 0 e stato: "vuoto" | Payload ricevuto corretto |
-| 3 | Verifica ricezione su Node-RED | Messaggio formattato correttamente con simbolo "rosso" 🔴 Vuoto | Messaggio formattato correttamente |
-| 4 | Verifica su dashboard | Testo "Stato" mostra "S01: 🔴 Vuoto" | Dashboard aggiornata correttamente |
+| 3 | Verifica ricezione su Node-RED | Messaggio formattato correttamente con simbolo "verde" 🟢 Vuoto | Messaggio formattato correttamente |
+| 4 | Verifica su dashboard | Testo "Stato" mostra "S01: 🟢 Vuoto" | Dashboard aggiornata correttamente |
 | 5 | Verifica coerenza dato | Stato "vuoto" salvato correttamente nello storico | Lettura salvata correttamente |
 
 ### Screenshot
