@@ -25,7 +25,7 @@ Schema ER MYSQL:
 
 	profondita (DECIMAL 5,2): Valore numerico decimale che memorizza la profondità totale espressa in centimetri dello scaffale vuoto. Questo dato è essenziale 	poiché funge da punto di riferimento per l'algoritmo del server il sistema calcola lo spazio occupato dalla merce e determina la quantità di prodotti 			presenti, confrontando la profondità massima con la distanza rilevata dal sensore ultrasonico.
 
-![Tabella Prodotti](Photos_Tables/scaffali.png)
+![Tabella Scaffali](Photos_Tables/scaffali.png)
 
 
 
@@ -40,7 +40,7 @@ Schema ER MYSQL:
 
 	data_lettura (TIMESTAMP): Indica il momento esatto in cui la lettura viene registrata sul database. Se non specificato, il sistema inserisce in automatico la 	data e l'ora correnti del server, permettendo di tracciare la timeline degli eventi in tempo reale. 
 
-![Tabella Prodotti](Photos_Tables/letture_sensore.png)
+![Tabella Letture Sensore](Photos_Tables/letture_sensore.png)
 
 
    
@@ -61,7 +61,7 @@ Schema ER MYSQL:
 
 	distanza (DECIMAL 5,2): Registra la distanza rilevata dal sensore (in centimetri) al momento del movimento. Viene salvata insieme a ogni transazione per mantenere traccia della misurazione grezza che ha generato il calcolo della quantità, utile anche per verificare o correggere eventuali anomalie rilevate come "errore".
 
-![Tabella Prodotti](Photos_Tables/movimenti.png)
+![Tabella Movimenti](Photos_Tables/movimenti.png)
 
 
 
@@ -75,7 +75,7 @@ Schema ER MYSQL:
 
 	ultima_modifica (TIMESTAMP): Tiene traccia del momento esatto in cui l'associazione è stata creata o modificata. Il database aggiorna automaticamente questo valore in tempo reale ogni volta che la riga viene modificata, senza bisogno di specificarlo manualmente nel codice del backend.
 
-![Tabella Prodotti](Photos_Tables/prodotti_scaffali.png)
+![Tabella Prodotti&Scaffali](Photos_Tables/prodotti_scaffali.png)
 
 
 Nelle tabelle "letture_sensore", "movimenti" e "prodotti_scaffali" possiamo notare che nell'ultima riga di ognuno c'è la colonna "current_timestamp()" ciò significa che il database inserisce automaticamente la data e l'ora corrente ogni volta che viene eseguita la query "INSERT".
@@ -89,4 +89,4 @@ username (VARCHAR 50): Il nome utente scelto per l'accesso al sistema. La dicitu
 password (VARCHAR 255): Contiene l'hash della password calcolato tramite l'algoritmo bcrypt, non la password in chiaro. La lunghezza di 255 caratteri è dimensionata per ospitare il formato standard degli hash generati da questa libreria, garantendo che le credenziali non siano mai leggibili direttamente dal database.
 nome (VARCHAR 100): Campo opzionale che memorizza il nome descrittivo associato all'account, utilizzato eventualmente per identificare l'utente in modo più leggibile rispetto al solo username.
 
-![Tabella Movimenti](Photos_Tables/utenti.png)
+![Tabella Utenti](Photos_Tables/utenti.png)
