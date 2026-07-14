@@ -49,8 +49,7 @@ Questo documento descrive l'esecuzione di due scenari di test end-to-end sul sis
 
 ### Screenshot
 
-- `![Rimozione colli](./screenshot/scenario2_rimozione_colli.png)`
-- `![Allerta vuoto dashboard](./screenshot/scenario2_allerta_vuoto.png)`
+![Stato sensore vuoto/parziale](./Scenari/stato%20sensore%20vuoto%20parziale.png)
 
 ### Esito
 
