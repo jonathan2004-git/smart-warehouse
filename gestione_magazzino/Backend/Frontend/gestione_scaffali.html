@@ -24,7 +24,10 @@
     </nav>
 
     <div class="container">
-        <h1>Scaffali</h1>
+        <div class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Scaffali</h1>
+            <button class="btn-aggiungi-top" onclick="apriModaleScaffale('aggiungi')" title="Aggiungi scaffale">✚ Aggiungi</button>
+        </div>
         <div id="banner-sensore" style="display:none; background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; margin-bottom:16px; font-weight:bold;">
             ⚠️ Attenzione: il sensore risulta scollegato. I dati potrebbero non essere aggiornati.
         </div>
@@ -52,11 +55,13 @@
 
     <script>
         const BASE = 'http://192.168.0.218:3000';
+        let scaffaliCache = [];
 
         async function caricaScaffali() {
             try {
                 const response = await fetch(`${BASE}/api/scaffali`);
                 const scaffali = await response.json();
+                scaffaliCache = scaffali;
 
                 const tbody = document.getElementById('scaffali-body');
                 const countDisplay = document.getElementById('total-count');
@@ -72,7 +77,7 @@
                             <td id="pos-${s.id_scaffale}">${s.posizione || '-'}</td>
                             <td id="prof-${s.id_scaffale}">${s.profondita || '-'}</td>
                             <td class="azioni">
-                                <button onclick="apriModaleScaffale('${s.id_scaffale}')" title="Modifica">✎</button>
+                                <button onclick="apriModaleScaffale('modifica', '${s.id_scaffale}')" title="Modifica">✎</button>
                                 <button onclick="eliminaScaffale('${s.id_scaffale}')" title="Elimina">🗑</button>
                             </td>
                         </tr>`;
@@ -85,16 +90,48 @@
         }
 
         let idScaffaleCorrente = null;
+        let modalitaModaleScaffale = 'aggiungi';
 
-        function apriModaleScaffale(id) {
-            idScaffaleCorrente = id;
-            const nome = document.getElementById(`nome-${id}`).innerText;
-            const posizione = document.getElementById(`pos-${id}`).innerText;
-            const profondita = document.getElementById(`prof-${id}`).innerText;
+        function prossimoIdScaffale() {
+            if (!scaffaliCache || scaffaliCache.length === 0) return 'S01';
 
-            document.getElementById('input-nome-scaffale').value = nome === id ? '' : nome;
-            document.getElementById('input-posizione').value = posizione === '-' ? '' : posizione;
-            document.getElementById('input-profondita').value = profondita === '-' ? '' : profondita;
+            let prefisso = 'S';
+            let massimo = 0;
+
+            scaffaliCache.forEach(s => {
+                const match = String(s.id_scaffale).match(/^([A-Za-z]*)(\d+)$/);
+                if (match) {
+                    prefisso = match[1] || prefisso;
+                    const numero = parseInt(match[2], 10);
+                    if (numero > massimo) massimo = numero;
+                }
+            });
+
+            const prossimo = massimo + 1;
+            return `${prefisso}${String(prossimo).padStart(2, '0')}`;
+        }
+
+        function apriModaleScaffale(modalita, id = null) {
+            modalitaModaleScaffale = modalita;
+
+            if (modalita === 'modifica') {
+                idScaffaleCorrente = id;
+                document.getElementById('modal-scaffale-titolo').textContent = 'Modifica scaffale';
+
+                const nome = document.getElementById(`nome-${id}`).innerText;
+                const posizione = document.getElementById(`pos-${id}`).innerText;
+                const profondita = document.getElementById(`prof-${id}`).innerText;
+
+                document.getElementById('input-id-scaffale').value = id;
+                document.getElementById('input-nome-scaffale').value = nome === id ? '' : nome;
+                document.getElementById('input-posizione').value = posizione === '-' ? '' : posizione;
+                document.getElementById('input-profondita').value = profondita === '-' ? '' : profondita;
+            } else {
+                idScaffaleCorrente = prossimoIdScaffale();
+                document.getElementById('modal-scaffale-titolo').textContent = 'Aggiungi scaffale';
+                document.getElementById('form-scaffale').reset();
+                document.getElementById('input-id-scaffale').value = idScaffaleCorrente;
+            }
 
             document.getElementById('modal-overlay').style.display = 'block';
             document.getElementById('modal-scaffale').style.display = 'block';
@@ -113,11 +150,19 @@
 
              if (!nome_scaffale || !profondita) return;
 
-             await fetch(`${BASE}/api/scaffali/${idScaffaleCorrente}`, {
-                 method: 'PUT',
-                 headers: { 'Content-Type': 'application/json' },
-                 body: JSON.stringify({ nome_scaffale, posizione, profondita })
-             });
+             if (modalitaModaleScaffale === 'aggiungi') {
+                 await fetch(`${BASE}/api/scaffali`, {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify({ id_scaffale: idScaffaleCorrente, nome_scaffale, posizione, profondita })
+                 });
+             } else {
+                 await fetch(`${BASE}/api/scaffali/${idScaffaleCorrente}`, {
+                     method: 'PUT',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify({ nome_scaffale, posizione, profondita })
+                 });
+             }
 
              chiudiModaleScaffale();
              caricaScaffali();
@@ -201,8 +246,10 @@
 <div id="popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9998;"></div>
 <div id="modal-overlay" class="modal-overlay" onclick="chiudiModaleScaffale()"></div>
 <div id="modal-scaffale" class="modal">
-    <h3>Modifica scaffale</h3>
+    <h3 id="modal-scaffale-titolo">Modifica scaffale</h3>
     <form id="form-scaffale" autocomplete="off">
+        <label for="input-id-scaffale">ID scaffale</label>
+        <input type="text" id="input-id-scaffale" disabled>
         <label for="input-nome-scaffale">Nome scaffale</label>
         <input type="text" id="input-nome-scaffale" required>
 
