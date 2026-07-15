@@ -255,8 +255,8 @@ Per una descrizione dettagliata, riga per riga, della logica di [express.js](ges
 - Descrizione: Scaffali con ultima lettura e quantità calcolata
 
 **POST /api/scaffali**
-- Descrizione: Crea uno scaffale manualmente
-- Body: `{ id_scaffale, posizione, stato }`
+- Descrizione: Crea uno scaffale manualmente (l'ID viene calcolato automaticamente dal frontend in base agli scaffali esistenti)
+- Body: `{ id_scaffale, nome_scaffale, posizione, profondita, stato }`
 
 **PUT /api/scaffali/:id**
 - Descrizione: Aggiorna posizione/profondità/nome
