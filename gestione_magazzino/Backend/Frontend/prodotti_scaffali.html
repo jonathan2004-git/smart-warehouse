@@ -23,7 +23,10 @@
     </nav>
 
     <div class="container">
-        <h1>Distribuzione Prodotti sugli Scaffali</h1>
+        <div class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Distribuzione Prodotti sugli Scaffali</h1>
+            <button class="btn-aggiungi-top" onclick="apriModaleAssociazione('aggiungi')" title="Aggiungi associazione">✚ Aggiungi</button>
+        </div>
         <div id="banner-sensore" style="display:none; background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; margin-bottom:16px; font-weight:bold;">
             ⚠️ Attenzione: il sensore risulta scollegato. I dati potrebbero non essere aggiornati.
         </div>
@@ -55,8 +58,8 @@
                         <td>${ps.nome_scaffale || ps.id_scaffale}</td>
                         <td>${new Date(ps.ultima_modifica).toLocaleString('it-IT')}</td>
                         <td class="azioni">
-                            <button onclick="apriModaleAssociazione('aggiungi')" title="Aggiungi">✚</button>
                             <button onclick="apriModaleAssociazione('modifica', ${ps.id_prodotto}, '${ps.id_scaffale}')" title="Modifica">✎</button>
+                            <button onclick="eliminaAssociazione(${ps.id_prodotto}, '${ps.id_scaffale}', '${ps.nome_prodotto}')" title="Elimina">🗑</button>
                         </td>
                     </tr>`;
                 });
@@ -64,9 +67,6 @@
                     tbody.innerHTML = `
                         <tr>
                             <td colspan="3">Nessuna associazione presente</td>
-                            <td class="azioni">
-                                <button onclick="apriModaleAssociazione('aggiungi')" title="Aggiungi">✚</button>
-                            </td>
                         </tr>`;
                 }
             } catch (e) { console.error(e); }
@@ -121,6 +121,22 @@
                 caricaAssegnazioni();
             });
         });
+
+        async function eliminaAssociazione(idProdotto, idScaffale, nomeProdotto) {
+            if (!confirm(`Sei sicuro di voler rimuovere l'associazione di "${nomeProdotto}"?`)) return;
+            try {
+                const res = await fetch(`http://192.168.0.218:3000/api/prodotti_scaffali/${idProdotto}/${idScaffale}`, { method: 'DELETE' });
+                if (!res.ok) {
+                    const testo = await res.text().catch(() => '');
+                    alert(`Rimozione non riuscita (HTTP ${res.status}). ${testo}`);
+                    return;
+                }
+            } catch (err) {
+                alert(`Errore di connessione al server: ${err.message}`);
+                return;
+            }
+            caricaAssegnazioni();
+        }
 
         caricaAssegnazioni();
         setInterval(caricaAssegnazioni, 2000);
