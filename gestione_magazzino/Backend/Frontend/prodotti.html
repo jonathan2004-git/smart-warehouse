@@ -27,7 +27,10 @@
 
 
     <div class="container">
-        <h1>Prodotti</h1>
+        <div class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Prodotti</h1>
+            <button class="btn-aggiungi-top" onclick="apriModaleProdotto('aggiungi')" title="Aggiungi prodotto">✚ Aggiungi</button>
+        </div>
         <div id="banner-sensore" style="display:none; background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; margin-bottom:16px; font-weight:bold;">
             ⚠️ Attenzione: il sensore risulta scollegato. I dati potrebbero non essere aggiornati.
         </div>
@@ -68,9 +71,6 @@
                     tbody.innerHTML = `
                         <tr>
                             <td colspan="4">Nessun prodotto presente</td>
-                            <td class="azioni">
-                                <button onclick="apriModaleProdotto('aggiungi')" title="Aggiungi">✚</button>
-                            </td>
                         </tr>`;
                     return;
                 }
@@ -82,7 +82,6 @@
                     <td id="desc-${p.id_prodotto}">${p.descrizione || '-'}</td>
                     <td id="misura-${p.id_prodotto}">${p.misura || '-'}</td>
                     <td class="azioni">
-                        <button onclick="apriModaleProdotto('aggiungi')" title="Aggiungi">✚</button>
                         <button onclick="apriModaleProdotto('modifica', ${p.id_prodotto})" title="Modifica"> ✎</button>
                         <button onclick="eliminaProdotto(${p.id_prodotto})" title="Elimina">🗑</button>
                     </td>
