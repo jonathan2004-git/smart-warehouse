@@ -44,7 +44,7 @@ Software richiesto sulla macchina prima di iniziare:
 | **Broker MQTT (es. Mosquitto)** | Communication con i sensori |
 | **Node-RED (opzionale)** | Dashboard aggiuntiva, gestita separatamente |
 
-Pacchetti npm installati automaticamente (vedi `package.json`):
+Pacchetti npm installati automaticamente (vedi [package.json](gestione_magazzino/Backend/package.json)):
 
 | Pacchetto | Versione | Uso nel progetto |
 | :--- | :--- | :--- |
@@ -58,7 +58,7 @@ Pacchetti npm installati automaticamente (vedi `package.json`):
 
 Pacchetto di sviluppo (non richiesto per l'esecuzione, solo per i test):
 
-* **jest** (`^30.4.2`): Framework di test, usato da `utils.test.js`
+* **jest** (`^30.4.2`): Framework di test, usato da [utils.test.js](gestione_magazzino/Backend/utils.test.js)
 
 ### Come installare:
 
@@ -75,7 +75,7 @@ Pacchetto di sviluppo (non richiesto per l'esecuzione, solo per i test):
    npm install
    ```
 
-3. Crea il database e, in seguito, seguendo i comandi che trovi in `schema.sql` (incluso in questo repository), crei le tabelle. Contiene le istruzioni CREATE TABLE per tutte e sei le tabelle:
+3. Crea il database e, in seguito, seguendo i comandi che trovi in [schema.sql](gestione_magazzino/Backend/schema.sql) (incluso in questo repository), crei le tabelle. Contiene le istruzioni CREATE TABLE per tutte e sei le tabelle:
 
    ```bash
    mysql -u nome_utente_mariadb -p nome_database
@@ -108,13 +108,13 @@ Pacchetto di sviluppo (non richiesto per l'esecuzione, solo per i test):
    Pagina web: [http://192.168.0.218:3000/login.html](http://192.168.0.218:3000/login.html)
    ```
 
-L'indirizzo IP e la porta sono attualmente definiti come costanti (`IP_LOCALE`, `PORT`) direttamente in `express.js`: se il server viene eseguito su una macchina diversa, vanno aggiornati manualmente prima dell'avvio.
+L'indirizzo IP e la porta sono attualmente definiti come costanti (`IP_LOCALE`, `PORT`) direttamente in [express.js](gestione_magazzino/Backend/express.js): se il server viene eseguito su una macchina diversa, vanno aggiornati manualmente prima dell'avvio.
 
 ---
 
 ## Schema ER MYSQL
 
-Il database magazzino è composto da 6 tabelle collegate tra loro tramite chiavi esterne. Le istruzioni SQL complete per crearle sono disponibili in `schema.sql`
+Il database magazzino è composto da 6 tabelle collegate tra loro tramite chiavi esterne. Le istruzioni SQL complete per crearle sono disponibili in [schema.sql](gestione_magazzino/Backend/schema.sql)
 
 ### 1. Tabella prodotti
 
@@ -187,14 +187,14 @@ Gestisce gli account abilitati ad accedere al sistema
 - **movimenti → prodotti**: nessuna clausola (default RESTRICT) — il database impedirebbe l'eliminazione di un prodotto finché esistono movimenti collegati; per questo la rotta `DELETE /api/prodotti/:id` cancella prima manualmente i movimenti.
 - `prodotti_scaffali.id_prodotto` ha inoltre un vincolo UNIQUE (`uq_id_prodotto`) oltre alla chiave primaria composta: un prodotto può essere associato a un solo scaffale alla volta.
 
-Lo schema Entità-Relazione completo, con la descrizione dettagliata di ogni campo, la trovi in [Schema ER MYSQL.md](Schema%20ER%20MYSQL.md); la definizione SQL esatta di ogni colonna e vincolo è invece consultabile direttamente in [schema.sql](schema.sql)
+Lo schema Entità-Relazione completo, con la descrizione dettagliata di ogni campo, la trovi in [Schema ER MYSQL.md](Schema%20ER%20MYSQL.md); la definizione SQL esatta di ogni colonna e vincolo è invece consultabile direttamente in [schema.sql](gestione_magazzino/Backend/schema.sql)
 
 ---
 
 ## Come funziona il flusso dati
 
 - Il sensore ultrasonico misura la distanza tra sé e il primo ostacolo (il prodotto sullo scaffale, o il fondo se vuoto).
-- Il dato viene pubblicato su un topic MQTT e ricevuto da `mqtt/listener.js`.
+- Il dato viene pubblicato su un topic MQTT e ricevuto da [listener.js](gestione_magazzino/Backend/mqtt/listener.js).
 - Il listener:
   - crea automaticamente lo scaffale se non esiste ancora;
   - classifica lo stato dello scaffale (pieno, parziale, vuoto) in base alla distanza;
@@ -211,7 +211,7 @@ Lo schema Entità-Relazione completo, con la descrizione dettagliata di ogni cam
 
 Tutte le rotte sotto `/api/...` richiedono una sessione attiva (login). Le pagine `.html` diverse da `login.html`, `password.html` e `username.html` sono protette da un middleware che reindirizza al login chi non è autenticato.
 
-Per una descrizione dettagliata, riga per riga, della logica di `express.js`, consulta la [Relazione file js.md](Relazione%20file%20js.md)
+Per una descrizione dettagliata, riga per riga, della logica di [express.js](gestione_magazzino/Backend/express.js), consulta la [Relazione file js.md](Relazione%20file%20js.md)
 
 ### Autenticazione (`routes/auth.js`)
 
@@ -317,12 +317,17 @@ Per una descrizione dettagliata, riga per riga, della logica di `express.js`, co
 
 ### Link a documentazione esterna
 
-- Documentazione Express.js
-- Documentazione mysql2
-- Documentazione MQTT.js
-- Documentazione bcrypt (npm)
-- Sito ufficiale MariaDB
-- Sito ufficiale Node-RED
+- [Documentazione Express.js](https://expressjs.com/it/)
+
+- [Documentazione mysql2](https://github.com/sidorares/node-mysql2)
+
+- [Documentazione MQTT.js](https://github.com/mqttjs/MQTT.js)
+
+- [Documentazione bcrypt (npm)](https://www.npmjs.com/package/bcrypt)
+
+- [Sito ufficiale MariaDB](https://mariadb.org/documentation/)
+
+- [Sito ufficiale Node-RED](https://nodered.org/docs/)
 
 ---
 
@@ -377,7 +382,7 @@ Il progetto include test automatici tramite Jest, eseguibili con:
 npm test
 ```
 
-Il dettaglio dei test eseguiti è consultabile in [report_test.md](report_test.md)
+Il dettaglio dei test eseguiti è consultabile in [report_test.md](docs/report_test.md)
 
 ---
 
