@@ -27,10 +27,12 @@ router.get('/scaffali', (req, res) => {
 
 // --- POST: crea un nuovo scaffale manualmente ---
 router.post('/scaffali', (req, res) => {
-    const { id_scaffale, posizione, stato } = req.body;
-
-    db.query('INSERT INTO scaffali (id_scaffale, posizione, stato) VALUES (?, ?, ?)',
-        [id_scaffale, posizione, stato || 'vuoto'], (err) => {
+    const { id_scaffale, nome_scaffale, posizione, profondita, stato } = req.body;
+    if (!id_scaffale) {
+        return res.status(400).json({ error: 'id_scaffale mancante' });
+    }
+    db.query('INSERT INTO scaffali (id_scaffale, nome_scaffale, posizione, profondita, stato) VALUES (?, ?, ?, ?, ?)',
+        [id_scaffale, nome_scaffale, posizione, profondita, stato || 'vuoto'], (err) => {
             if (err) return res.status(500).json({ error: err.message });
             res.status(201).json({ message: 'Scaffale creato correttamente!' });
         });
