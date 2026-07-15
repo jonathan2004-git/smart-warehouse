@@ -8,7 +8,7 @@ Il server, nel suo insieme, svolge tre compiti principali in contemporanea:
 - Espone un'API REST che il frontend usa per leggere e scrivere dati sul database MariaDB;
 - Si connette al broker MQTT Mosquitto per ricevere in tempo reale i dati inviati dall'Arduino tramite Node-RED, elaborarli e salvarli nel database.
 
-Librerie utilizzate
+### Librerie utilizzate
 
 - **dotenv**: legge le credenziali del database da un file `.env` nascosto, evitando di scrivere password nel codice.
 - **express**: framework per creare il server web e definire le API REST.
@@ -19,7 +19,7 @@ Librerie utilizzate
 - **mqtt**: permette al backend di connettersi al broker Mosquitto e ricevere i messaggi MQTT dall'Arduino.
 - **path**: modulo Node.js standard per gestire i percorsi dei file.
 
-Struttura del progetto
+### Struttura del progetto
 
 Il backend è organizzato in moduli separati, ciascuno con una responsabilità precisa:
 
@@ -34,15 +34,15 @@ Il backend è organizzato in moduli separati, ciascuno con una responsabilità p
 - `routes/sistema.js` — stato del server, stato del sensore, diagnostica.
 - `mqtt/listener.js` — ricezione ed elaborazione dei messaggi MQTT provenienti dai sensori.
 
-Setup e configurazione iniziale
+### Setup e configurazione iniziale
 
 `express.js` carica le variabili d'ambiente dal file `.env`, così le credenziali non sono mai scritte nel codice sorgente, e configura i middleware globali (sessione, CORS, parsing JSON, protezione delle pagine `.html` per gli utenti non autenticati).
 
-Connessione al database
+### Connessione al database
 
 Gestita da `db.js`: il backend si connette a MariaDB usando le variabili lette da `.env`. La connessione avviene una sola volta all'avvio del server e rimane aperta per tutta la durata dell'esecuzione. Se la connessione fallisce, viene stampato un errore nel terminale ma il server continua ad avviarsi.
 
-Autenticazione (`routes/auth.js`)
+### Autenticazione (`routes/auth.js`)
 
 Le pagine `.html` protette (tutte tranne `login.html`, `password.html` e `username.html`) sono accessibili solo con una sessione attiva: senza sessione, il middleware globale in `express.js` reindirizza automaticamente al login.
 
@@ -53,7 +53,7 @@ Sono presenti anche:
 - `POST /api/username` — cambia lo username di un utente, verificando la password e controllando che il nuovo username non sia già in uso.
 - `GET /logout` — distrugge la sessione e reindirizza al login.
 
-API REST
+### API REST
 
 Ogni rotta riceve una richiesta HTTP, esegue una query e restituisce il risultato in JSON.
 
@@ -67,7 +67,7 @@ Sia `/api/prodotti` che `/api/scaffali` seguono lo stesso schema: GET restituisc
 
 *Sistema* (`routes/sistema.js`): GET `/api/health` verifica la raggiungibilità del database, GET `/api/sensore/stato` restituisce lo stato online/offline del sensore, GET `/api/errore/payload` restituisce l'ultimo errore di parsing MQTT, GET `/api/sensor/timestamp` restituisce il timestamp dell'ultimo aggiornamento.
 
-Listener MQTT (`mqtt/listener.js`)
+### Listener MQTT (`mqtt/listener.js`)
 
 Gestisce la comunicazione in tempo reale con l'hardware. Il backend si connette al broker Mosquitto in esecuzione sul Raspberry Pi e si mette in ascolto su tutti i topic del canale `magazzino/#`.
 
@@ -84,7 +84,7 @@ Gestisce la comunicazione in tempo reale con l'hardware. Il backend si connette 
 - Se il messaggio include un prodotto, aggiorna automaticamente l'associazione prodotto-scaffale.
 - Pubblica un messaggio di conferma su `magazzino/monitor` e, se la quantità è cambiata, un aggiornamento su `magazzino/dashboard` per Node-RED.
 
-Avvio del server
+### Avvio del server
 
 Il server viene avviato sulla porta 3000, con indirizzo IP definito come costante in `express.js` — entrambi i valori sono attualmente hardcoded nel file, non letti da `.env` (vedi limitazioni note nel README principale).
 
