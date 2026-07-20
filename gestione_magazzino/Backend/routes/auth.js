@@ -9,15 +9,15 @@ router.post('/login', (req, res) => {
 
     db.query('SELECT * FROM utenti WHERE username = ?', [username], (err, results) => {
         if (err) return res.status(500).send('Errore server');
-        if (results.length === 0) return res.redirect('/login.html?errore=1');
+        if (results.length === 0) return res.redirect('/index.html?errore=1');
 
         bcrypt.compare(password, results[0].password, (err, corrisponde) => {
             if (err) return res.status(500).send('Errore server');
             if (corrisponde) {
                 req.session.user = results[0];
-                res.redirect('/prodotti.html');
+                res.redirect('/Inventario.html');
             } else {
-                res.redirect('/login.html?errore=1');
+                res.redirect('/index.html?errore=1');
             }
         });
     });
@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
 // --- logout: distrugge la sessione e reindirizza al login ---
 router.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/login.html');
+    res.redirect('/index.html');
 });
 
 // --- lista username per autocomplete nella pagina di login ---
