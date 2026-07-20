@@ -30,6 +30,27 @@ h1 {
     margin-bottom: 8px;
 }
 
+/* --- tasto azione "Aggiungi" --- */
+.btn-aggiungi-top {
+    background-color: #90e0ef !important;
+    color: #0077b6 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 6px 14px !important;
+    font-size: 1em !important;
+    font-weight: bold !important;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-aggiungi-top:hover {
+    background-color: #48cae4 !important;
+}
+
+.btn-aggiungi-top:active {
+    transform: scale(0.95);
+}
+
 .subtitle {
     color: #64748b;
     font-size: 0.95em;
