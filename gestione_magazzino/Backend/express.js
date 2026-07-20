@@ -29,17 +29,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // --- protezione pagine HTML: blocca l'accesso senza sessione attiva ---
-const paginePubbliche = ['/login.html', '/password.html', '/username.html'];
+const paginePubbliche = ['/index.html', '/password.html', '/username.html'];
 app.use((req, res, next) => {
     if (req.path.endsWith('.html') && !paginePubbliche.includes(req.path)) {
-        if (!req.session.user) return res.redirect('/login.html');
+        if (!req.session.user) return res.redirect('/index.html');
     }
     next();
 });
 
 // --- file statici dalla cartella Frontend ---
 app.use(express.static(path.join(__dirname, 'Frontend')));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'Frontend', 'login.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'Frontend', 'index.html')));
 
 // --- rotte ---
 app.use('/', authRoutes);           // login, logout, utenti, password, username
@@ -55,7 +55,7 @@ const IP_LOCALE = '192.168.0.218';
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log('\x1b[32m%s\x1b[0m', '--- Server avviato con successo ---');
-    console.log(`Pagina web: \x1b[36mhttp://${IP_LOCALE}:${PORT}/login.html\x1b[0m`);
+    console.log(`Pagina web: \x1b[36mhttp://${IP_LOCALE}:${PORT}/index.html\x1b[0m`);
     console.log('------------------------------------------');
 });
 
